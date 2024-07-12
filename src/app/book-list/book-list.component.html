@@ -1,0 +1,32 @@
+<table class="table">
+    <thead>
+        <tr>
+            <th>Imagen</th>
+            <th>Nombre</th>
+            <th>Description</th>
+            <th>Precio</th>
+            <th>Stock</th>
+            <th>Compra</th>
+        </tr>
+    </thead>
+    <tbody>
+        
+            @for ( book of books; track book.id){
+                <tr [ngClass]="{'clearance': book.clearance}">
+                    <td><img [src]="book.image" [alt]="book.name"></td>
+                    <td>{{book.name}}</td>
+                    <td>{{book.description}}</td>
+                    <td>{{book.price | currency}}</td>
+                    <td>
+                        <span class="badge text-bg-secondary" *ngIf="book.stock == 0">Sin Stock</span>
+                        <span *ngIf="book.stock > 0">{{book.stock}}</span>
+                    </td>
+                    <td><button type="button" class="btn btn-outline-danger" (click)="downQuantity(book)">-</button>
+                            <input type="text" [value]="book.quantity">
+                             {{book.quantity}}
+                        <button type="button" class="btn btn-outline-success" (click)="upQuantity(book)">+</button></td>
+                </tr>
+            }
+          
+      
+    </tbody>
