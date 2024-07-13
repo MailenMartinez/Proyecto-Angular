@@ -1,53 +1,44 @@
-import { Component } from '@angular/core';
-import { Book } from './book';
+import { Component, OnInit } from '@angular/core';
+import { Book } from './Book';
+import { InputIntegerComponent } from '../input-integer/input-integer.component';
+import { BookCartService } from '../book-cart.service';
+import { MockApiService } from '../mock-api.service';
 
 @Component({
   selector: 'app-book-list',
   templateUrl: './book-list.component.html',
   styleUrl: './book-list.component.scss'
 })
-export class BookListComponent {
+
+
+export class BookListComponent  implements OnInit{
   books: Book[] = [
-    {
-    id: 1,
-    name: "nombre",
-    description : "descripcion",
-    price : 123,
-    stock : 0,
-    image:"../../img/encantado.jpg",
-    clearance: false,
-    quantity: 0,
-    },
-    {
-      id: 1,
-      name: "nombre2",
-      description : "descripcion",
-      price : 123,
-      stock : 123,
-      image:"../../img/encantado.jpg",
-      clearance: true,
-      quantity: 0,
-    },
-    {
-        id: 1,
-      name: "nombre3",
-      description : "descripcion",
-      price : 123,
-      stock : 3,
-      image:"../../img/encantado.jpg",
-      clearance: false,
-      quantity: 0,
-    }
-  ]
-  upQuantity (book : Book) : void {
-    if (book.stock> book.quantity){
-      book.quantity++;
-    }
+ 
   
+  ]
+
+
+  constructor(private cart: BookCartService, private mockApi : MockApiService){
   }
-  downQuantity (book : Book) : void {
-    if (book.quantity>0){
-      book.quantity--;
+  ngOnInit(): void {
+      this.getBooks();
+  }
+  maxReached(m: string){
+    alert (m);
+  }
+
+  addToCart (book: Book): void{
+
+  
+    this.cart.addToCart(book);
+    book.stock-=book.quantity;
+    book.quantity=0;
     }
-  }
+
+    getBooks(){
+      this.mockApi.getBooks().subscribe(
+        data=> {this.books=data;},
+        error=>{console.log('error al cargar libros', error);}
+      )
+    }
 }

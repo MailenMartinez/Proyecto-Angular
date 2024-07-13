@@ -1,0 +1,6 @@
+<td class="container d-flex" ><button type="button" class="btn btn-outline-danger" (click)="downQuantity()">-</button>
+    <input class="input-group-text"
+        type="number" 
+        [(ngModel)]= "quantity" 
+        (keyup)="changeQuantity($event , quantity)">
+<button type="button" class="btn btn-outline-success" (click)="upQuantity()">+</button></td>

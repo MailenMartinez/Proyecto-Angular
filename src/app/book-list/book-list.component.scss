@@ -7,3 +7,21 @@ img{
     background-color: #b5e6cd;
     
 }
+
+.table {
+    table-layout: fixed;
+    width: 100%;
+}
+
+.table th, .table td {
+    word-wrap: break-word;
+    overflow: hidden;
+}
+
+.desc {
+    white-space: wrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 300px; /* Ajusta según sea necesario */
+}
+

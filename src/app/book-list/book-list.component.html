@@ -18,13 +18,16 @@
                     <td>{{book.description}}</td>
                     <td>{{book.price | currency}}</td>
                     <td>
-                        <span class="badge text-bg-secondary" *ngIf="book.stock == 0">Sin Stock</span>
-                        <span *ngIf="book.stock > 0">{{book.stock}}</span>
+                        @if ( book.stock == 0){
+
+                            <span class="badge text-bg-secondary stock">Sin Stock</span>
+                        }
+                        @else {
+                            <span class="stock">{{book.stock}}</span>
+                        }
                     </td>
-                    <td><button type="button" class="btn btn-outline-danger" (click)="downQuantity(book)">-</button>
-                            <input type="text" [value]="book.quantity">
-                             {{book.quantity}}
-                        <button type="button" class="btn btn-outline-success" (click)="upQuantity(book)">+</button></td>
+                        <app-input-integer [(quantity)]= "book.quantity" [max]= "book.stock" *ngIf="book.stock>0" (maxReached)="maxReached($event)"> </app-input-integer>
+                        <button class="btn" (click)="addToCart(book)">Comprar</button>
                 </tr>
             }
           
