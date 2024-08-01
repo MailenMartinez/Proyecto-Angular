@@ -29,10 +29,12 @@ export class BookListComponent  implements OnInit{
 
   addToCart (book: Book): void{
 
-  
-    this.cart.addToCart(book);
-    book.stock-=book.quantity;
+    if (book.quantity>0){
+      this.cart.addToCart(book);
+      book.stock-=book.quantity;
+    }
     book.quantity=0;
+   
     }
 
     getBooks(){

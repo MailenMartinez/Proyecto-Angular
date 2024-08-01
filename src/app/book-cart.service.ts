@@ -7,28 +7,25 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class BookCartService {
 
- 
-private _cartList: Book[]=[];
-cartList: BehaviorSubject<Book[]> = new BehaviorSubject<Book[]>([]);
-  
-  constructor() { 
-   
-  }
+  private _cartList: Book[] = [];
+  cartList: BehaviorSubject<Book[]> = new BehaviorSubject<Book[]>([]);
 
-  addToCart(book: Book){
-  
-   let item: Book | undefined  = this._cartList.find((v1) => v1.name==book.name)
-    if (!item){
-      this._cartList.push({ ... book});
+  constructor() { }
 
-    }else{
+  addToCart(book: Book) {
+    let item: Book | undefined = this._cartList.find((v1) => v1.name == book.name);
+    if (!item) {
+      if (book.quantity > 0) { // Solo añadir si la cantidad es mayor a 0
+        this._cartList.push({ ...book });
+      }
+    } else {
       item.quantity += book.quantity;
-
+      if (item.quantity <= 0) { // Remover el ítem si la cantidad es 0 o menor
+        this._cartList = this._cartList.filter((v1) => v1.name != book.name);
+      }
     }
-    this._cartList.push(book);
-    console.log(this._cartList.length);
     this.cartList.next(this._cartList);
-
   }
+
 
 }
